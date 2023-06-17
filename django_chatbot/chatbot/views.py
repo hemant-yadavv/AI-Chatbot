@@ -8,20 +8,19 @@ from .models import Chat
 
 from django.utils import timezone
 
-openai_api_key = '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' 
+openai_api_key = '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' 
 openai.api_key = openai_api_key
 
 def ask_openai(message):
-    response = openai.Completion.create(
-        model = "text-davinci-003",
-        prompt = message,
-        max_token=150,
-        n=1,
-        stop=None,
-        temperature=0.7,
+    response = openai.ChatCompletion.create(
+        model = "gpt-3.5-turbo", 
+        messages = [
+            {"role": "system","content":"You are a helpful assistant."},
+            {"role":"user","content":message},
+        ]
     )
-  
-    answer = response.choices[0].text.strip()
+    
+    answer = response.choices[0].message.content.strip()
     return answer
 
 # Create your views here.
